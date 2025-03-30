@@ -10,7 +10,8 @@ import java.util.Date;
 public class Utente {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private int id;
+    @Column(name = "numero_tessera", nullable = false, unique = true)
+    private Long numeroTessera;
 
     @Column(name = "nome", nullable = false)
     private String nome;
@@ -21,26 +22,21 @@ public class Utente {
     @Column(name = "data_nascita", nullable = false)
     private Date dataNascita;
 
-    @Column(name = "numero_tessera", nullable = false, unique = true)
-    private String numeroTessera;
-
     public Utente() {
     }
 
-    public Utente(int id, String nome, String cognome, Date dataNascita, String numeroTessera) {
-        this.id = id;
+    public Utente(String nome, String cognome, Date dataNascita) {
         this.nome = nome;
         this.cognome = cognome;
         this.dataNascita = dataNascita;
+    }
+
+    public Long getNumeroTessera() {
+        return numeroTessera;
+    }
+
+    public void setNumeroTessera(Long numeroTessera) {
         this.numeroTessera = numeroTessera;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getNome() {
@@ -65,14 +61,6 @@ public class Utente {
 
     public void setDataNascita(Date dataNascita) {
         this.dataNascita = dataNascita;
-    }
-
-    public String getNumeroTessera() {
-        return numeroTessera;
-    }
-
-    public void setNumeroTessera(String numeroTessera) {
-        this.numeroTessera = numeroTessera;
     }
 }
 

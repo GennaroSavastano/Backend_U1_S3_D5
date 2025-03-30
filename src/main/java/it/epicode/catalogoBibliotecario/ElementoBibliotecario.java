@@ -1,19 +1,21 @@
 package it.epicode.catalogoBibliotecario;
 
+
+import it.epicode.prestito.Prestito;
 import jakarta.persistence.*;
 
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+import java.util.List;
+
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "elementi_bibliotecari")
 public abstract class ElementoBibliotecario {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long id;
-
     @Column(name = "isbn", unique = true, nullable = false)
-    private String isbn;
+    private Long isbn;
 
-    @Column(name = "titolo")
+    @Column(name = "titolo" , nullable = false, length = 100)
     private String titolo;
 
     @Column(name = "anno_pubblicazione")
@@ -22,30 +24,31 @@ public abstract class ElementoBibliotecario {
     @Column(name = "numero_pagine")
     private int numeroPagine;
 
+    @OneToMany(mappedBy = "elementoPrestito")
+    private  List<Prestito> prestiti;
+
+
     public ElementoBibliotecario() {
     }
 
-    public ElementoBibliotecario(int numeroPagine, int annoPubblicazione, String titolo, String isbn, Long id) {
-        this.numeroPagine = numeroPagine;
-        this.annoPubblicazione = annoPubblicazione;
+    public ElementoBibliotecario(String titolo, int annoPubblicazione, int numeroPagine) {
         this.titolo = titolo;
-        this.isbn = isbn;
-        this.id = id;
+        this.annoPubblicazione = annoPubblicazione;
+        this.numeroPagine = numeroPagine;
     }
 
-    public Long getId() {
-        return id;
+    public ElementoBibliotecario( String titolo, int annoPubblicazione, int numeroPagine, List<Prestito> prestiti) {
+        this.titolo = titolo;
+        this.annoPubblicazione = annoPubblicazione;
+        this.numeroPagine = numeroPagine;
+        this.prestiti = prestiti;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getIsbn() {
+    public Long getIsbn() {
         return isbn;
     }
 
-    public void setIsbn(String isbn) {
+    public void setIsbn(Long isbn) {
         this.isbn = isbn;
     }
 
@@ -71,5 +74,13 @@ public abstract class ElementoBibliotecario {
 
     public void setNumeroPagine(int numeroPagine) {
         this.numeroPagine = numeroPagine;
+    }
+
+    public List<Prestito> getPrestiti() {
+        return prestiti;
+    }
+
+    public void setPrestiti(List<Prestito> prestiti) {
+        this.prestiti = prestiti;
     }
 }

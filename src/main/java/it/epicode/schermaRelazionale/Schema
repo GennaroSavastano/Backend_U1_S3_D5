@@ -1,0 +1,29 @@
+******************************************************************************
+                          schema relazioni archivio
+******************************************************************************
+
+1.  ElementoBibliotecario 1 ──────────────── M Prestito
+
+Un elemento bibliotecario può essere prestato molte volte. Ogni prestito è associato a un solo elemento bibliotecario.
+
+******************************************************************************
+
+2.  Utente 1 ──────────────── M Prestito
+
+Ogni utente può avere molti prestiti, ma ogni prestito è associato a un solo utente.
+
+*****************************************************************************
+
+3.  ElementoBibliotecario 1 ──────────────── M Libro
+
+Ogni libro è un tipo di elemento bibliotecario, e un elemento bibliotecario può essere un libro. La relazione è di tipo 1 a molti in quanto un elemento bibliotecario può essere un libro, ma un libro è sempre un elemento bibliotecario.
+
+*****************************************************************************
+
+4.  ElementoBibliotecario 1 ──────────────── M Rivista
+
+Ogni rivista è un tipo di elemento bibliotecario, e un elemento bibliotecario può essere una rivista. La relazione è di tipo 1 a molti, poiché un elemento bibliotecario può essere una rivista, ma una rivista è sempre un elemento bibliotecario.
+
+******************************************************************************
+
+

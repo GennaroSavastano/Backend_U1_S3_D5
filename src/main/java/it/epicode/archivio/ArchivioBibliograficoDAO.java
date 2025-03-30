@@ -16,55 +16,43 @@ public class ArchivioBibliograficoDAO {
     }
 
 
-    // Aggiungi un elemento al catalogo
+ // Aggiungi Elemento
     public void aggiungiElemento(ElementoBibliotecario elemento) {
         em.persist(elemento);
+        System.out.println("Elemento Bibliotecario Salvato con codice ISBN : " + elemento.getIsbn());
     }
 
-    // Rimuovi un elemento dal catalogo dato il suo codice ISBN
-    public void rimuoviElementoPerISBN(String isbn) {
+ //  Rimuovi Elemento per isbn
+    public void rimuoviElemento(Long isbn) {
         ElementoBibliotecario elemento = em.find(ElementoBibliotecario.class, isbn);
-        if (elemento != null) {
             em.remove(elemento);
         }
-    }
 
-    // cerca un elemento dal catalogo dato il suo codice ISBN
-    public ElementoBibliotecario cercaElementoPerISBN(String isbn) {
+
+    // Ricerca per isbn
+    public ElementoBibliotecario ricercaPerISBN(Long isbn) {
         return em.find(ElementoBibliotecario.class, isbn);
     }
 
-    // ricerca per anno di pubblicazione
-    public List<ElementoBibliotecario> cercaElementiPerAnnoPubblicazione(int anno) {
+    // Ricerca per anno di pubblicazione
+    public List<ElementoBibliotecario> ricercaPerAnnoPubblicazione(int anno) {
         TypedQuery<ElementoBibliotecario> query = em.createQuery("SELECT e FROM ElementoBibliotecario e WHERE e.annoPubblicazione = :anno", ElementoBibliotecario.class);
         query.setParameter("anno", anno);
         return query.getResultList();
     }
 
-    // ricerca per autore
-    public List<ElementoBibliotecario> cercaElementiPerAutore(String autore) {
+    // Ricerca per autore
+    public List<ElementoBibliotecario> ricercaPerAutore(String autore) {
         TypedQuery<ElementoBibliotecario> query = em.createQuery("SELECT e FROM ElementoBibliotecario e WHERE e.autore = :autore", ElementoBibliotecario.class);
         query.setParameter("autore", autore);
         return query.getResultList();
     }
 
-    // ricerca per titolo o parte di esso
-    public List<ElementoBibliotecario> cercaElementiPerTitolo(String titolo) {
+    // Ricerca per titolo
+    public List<ElementoBibliotecario> ricercaPerTitolo(String titolo) {
         TypedQuery<ElementoBibliotecario> query = em.createQuery("SELECT e FROM ElementoBibliotecario e WHERE e.titolo LIKE :titolo", ElementoBibliotecario.class);
         query.setParameter("titolo", "%" + titolo + "%");
         return query.getResultList();
     }
 
-    // prestito scaduto
-    public List<Prestito> cercaPrestitiScaduti() {
-        TypedQuery<Prestito> query = em.createQuery("SELECT p FROM Prestito p WHERE p.dataRestituzionePrevista < CURRENT_DATE", Prestito.class);
-        return query.getResultList();
-    }
-
-    // prestiti per utente
-    public List<Prestito> cercaPrestitiPerUtente(Utente utente) {
-        TypedQuery<Prestito> query = em.createQuery("SELECT p FROM Prestito p WHERE p.utente = :utente", Prestito.class);
-        query.setParameter("utente", utente);
-        return query.getResultList();
-    }
 }

@@ -1,7 +1,10 @@
 package it.epicode.catalogoBibliotecario;
 
 
+import it.epicode.prestito.Prestito;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "riviste")
@@ -19,8 +22,17 @@ private Periodicita periodicita;
         this.periodicita = periodicita;
     }
 
-    public Rivista(int numeroPagine, int annoPubblicazione, String titolo, String isbn, Long id, Periodicita periodicita) {
-        super(numeroPagine, annoPubblicazione, titolo, isbn, id);
+    public Rivista( String titolo, int annoPubblicazione, int numeroPagine, Periodicita periodicita) {
+        super( titolo, annoPubblicazione, numeroPagine);
+        this.periodicita = periodicita;
+    }
+
+    public Rivista( String titolo, int annoPubblicazione, int numeroPagine, List<Prestito> prestiti) {
+        super(titolo, annoPubblicazione, numeroPagine, prestiti);
+    }
+
+    public Rivista( String titolo, int annoPubblicazione, int numeroPagine, List<Prestito> prestiti, Periodicita periodicita) {
+        super(titolo, annoPubblicazione, numeroPagine, prestiti);
         this.periodicita = periodicita;
     }
 

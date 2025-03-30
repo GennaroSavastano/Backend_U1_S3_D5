@@ -4,8 +4,10 @@ package it.epicode.prestito;
 import it.epicode.catalogoBibliotecario.ElementoBibliotecario;
 import it.epicode.utente.Utente;
 import jakarta.persistence.*;
+import org.hibernate.annotations.Cascade;
 
 import java.util.Date;
+import java.util.Locale;
 
 @Entity
 @Table(name = "prestiti")
@@ -13,15 +15,15 @@ public class Prestito {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long id;
+    private Long idPrestito;
 
     @ManyToOne
-    @JoinColumn(name = "utente_id", nullable = false)
+    @JoinColumn(name = "numero_tessera", nullable = false)
     private Utente utente;
 
     @ManyToOne
-    @JoinColumn(name = "elemento_bibliotecario_id", nullable = false)
-    private ElementoBibliotecario elementoBibliotecario;
+    @JoinColumn( nullable = false, referencedColumnName = "isbn")
+    private ElementoBibliotecario elementoPrestito;
 
     @Column(name = "data_inizio_prestito", nullable = false)
     private Date dataInizioPrestito;
@@ -36,21 +38,21 @@ public class Prestito {
     public Prestito() {
     }
 
-    public Prestito(Date dataRestituzioneEffettiva, Date dataRestituzionePrevista, Date dataInizioPrestito, ElementoBibliotecario elementoBibliotecario, Utente utente, Long id) {
-        this.dataRestituzioneEffettiva = dataRestituzioneEffettiva;
-        this.dataRestituzionePrevista = dataRestituzionePrevista;
-        this.dataInizioPrestito = dataInizioPrestito;
-        this.elementoBibliotecario = elementoBibliotecario;
+    public Prestito(Utente utente, ElementoBibliotecario elementoPrestito, Date dataInizioPrestito, Date dataRestituzionePrevista, Date dataRestituzioneEffettiva) {
         this.utente = utente;
-        this.id = id;
+        this.elementoPrestito = elementoPrestito;
+        this.dataInizioPrestito = dataInizioPrestito;
+        this.dataRestituzionePrevista = new Date(dataInizioPrestito.getTime() + (30L * 24 * 60 * 60 * 1000));
+        this.dataRestituzioneEffettiva = dataRestituzioneEffettiva;
     }
 
-    public Long getId() {
-        return id;
+
+    public Long getIdPrestito() {
+        return idPrestito;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setIdPrestito(Long idPrestito) {
+        this.idPrestito = idPrestito;
     }
 
     public Utente getUtente() {
@@ -61,12 +63,12 @@ public class Prestito {
         this.utente = utente;
     }
 
-    public ElementoBibliotecario getElementoBibliotecario() {
-        return elementoBibliotecario;
+    public ElementoBibliotecario getElementoPrestito() {
+        return elementoPrestito;
     }
 
-    public void setElementoBibliotecario(ElementoBibliotecario elementoBibliotecario) {
-        this.elementoBibliotecario = elementoBibliotecario;
+    public void setElementoPrestito(ElementoBibliotecario elementoPrestito) {
+        this.elementoPrestito = elementoPrestito;
     }
 
     public Date getDataInizioPrestito() {

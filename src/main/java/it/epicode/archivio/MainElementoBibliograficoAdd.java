@@ -15,36 +15,30 @@ public class MainElementoBibliograficoAdd {
 
         ArchivioBibliograficoDAO archivioDAO = new ArchivioBibliograficoDAO(em);
 
-       //crea un nuovo libro
-        Libro libro = new Libro();
-        libro.setTitolo("Il Signore degli Anelli");
-        libro.setAnnoPubblicazione(1954);
-        libro.setNumeroPagine(1000);
-        libro.setIsbn("978-3-16-148410-0");
-        libro.setAutore("J. R. R. Tolkien");
-        libro.setGenere("Fantasy");
+      // crea elementi libro
 
-        // crea una nuova rivista
-        Rivista rivista = new Rivista();
-        rivista.setTitolo("National Geographic");
-        rivista.setAnnoPubblicazione(2023);
-        rivista.setNumeroPagine(100);
-        rivista.setIsbn("978-3-16-148410-0");
-        rivista.setPeriodicita(Periodicita.MENSILE);
+        Libro libro1 = new Libro( "Il Signore degli Anelli", 1954, 1178, "J.R.R. Tolkien", "Fantasy");
+        Libro libro2 = new Libro("1984", 1949, 328, "George Orwell", "Distopico");
 
+
+
+        // genera elementi rivista
+        Rivista rivista1 = new Rivista("National Geographic", 1888, 100, Periodicita.MENSILE);
+        Rivista rivista2 = new Rivista("Scientific American", 1890, 100, Periodicita.MENSILE);
 
         em.getTransaction().begin();
-        archivioDAO.aggiungiElemento(libro);
-        archivioDAO.aggiungiElemento(rivista);
+        // aggiungi elementi al catalogo
+        archivioDAO.aggiungiElemento(libro1);
+        archivioDAO.aggiungiElemento(libro2);
+
+        archivioDAO.aggiungiElemento(rivista1);
+        archivioDAO.aggiungiElemento(rivista2);
+
         em.getTransaction().commit();
 
-        System.out.println("Elemento aggiunto al catalogo: " + libro.getTitolo());
-        System.out.println("Elemento aggiunto al catalogo: " + rivista.getTitolo());
 
         em.close();
         emf.close();
-
-
     }
 
 }

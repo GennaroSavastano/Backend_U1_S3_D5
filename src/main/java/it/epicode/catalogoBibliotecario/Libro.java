@@ -1,24 +1,18 @@
 package it.epicode.catalogoBibliotecario;
 
+import it.epicode.prestito.Prestito;
 import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
+import java.util.List;
+
 @Entity
-@Table(name = "libri")
+@Table(name = "libro")
 public class Libro extends ElementoBibliotecario {
-    public Libro(String autore, String genere) {
-        this.autore = autore;
-        this.genere = genere;
-    }
 
-    public Libro(int numeroPagine, int annoPubblicazione, String titolo, String isbn, Long id, String autore, String genere) {
-        super(numeroPagine, annoPubblicazione, titolo, isbn, id);
-        this.autore = autore;
-        this.genere = genere;
-    }
-
-    @Column(name = "autore")
+    @Column(name = "autore", nullable = false)
     private String autore;
 
     @Column(name = "genere")
@@ -27,11 +21,24 @@ public class Libro extends ElementoBibliotecario {
     public Libro() {
     }
 
-    public String getGenere() {
-        return genere;
+    public Libro(String autore, String genere) {
+        this.autore = autore;
+        this.genere = genere;
     }
 
-    public void setGenere(String genere) {
+    public Libro( String titolo, int annoPubblicazione, int numeroPagine, String autore, String genere) {
+        super( titolo, annoPubblicazione, numeroPagine);
+        this.autore = autore;
+        this.genere = genere;
+    }
+
+    public Libro( String titolo, int annoPubblicazione, int numeroPagine, List<Prestito> prestiti) {
+        super( titolo, annoPubblicazione, numeroPagine, prestiti);
+    }
+
+    public Libro( String titolo, int annoPubblicazione, int numeroPagine, List<Prestito> prestiti, String autore, String genere) {
+        super( titolo, annoPubblicazione, numeroPagine, prestiti);
+        this.autore = autore;
         this.genere = genere;
     }
 
@@ -41,5 +48,13 @@ public class Libro extends ElementoBibliotecario {
 
     public void setAutore(String autore) {
         this.autore = autore;
+    }
+
+    public String getGenere() {
+        return genere;
+    }
+
+    public void setGenere(String genere) {
+        this.genere = genere;
     }
 }
